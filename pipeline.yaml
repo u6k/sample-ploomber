@@ -1,0 +1,26 @@
+tasks:
+  - name: make_dataset
+    source: src/data/make_dataset.py
+    product:
+      nb: notebooks/make_dataset.ipynb
+      df_wine: data/raw/df_wine.parquet
+
+  - name: build_features
+    source: src/features/build_features.py
+    product:
+      nb: notebooks/build_features.ipynb
+      df_wine_train: data/interim/df_wine_train.parquet
+      df_wine_test: data/interim/df_wine_test.parquet
+
+  - name: train_model
+    source: src/models/train_model.py
+    product:
+      nb: notebooks/train_model.ipynb
+      model: models/model.pkl
+      pred_train: data/processed/df_pred_train.parquet
+      pred_test: data/processed/df_pred_test.parquet
+
+  - name: reporting
+    source: src/visualization/reporting.py
+    product:
+      nb: notebooks/reporting.ipynb
