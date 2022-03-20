@@ -29,4 +29,5 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Setup jupyter extensions
-RUN nbdime extensions --enable
+RUN nbdime extensions --enable && \
+    jupyter serverextension enable ploomber
