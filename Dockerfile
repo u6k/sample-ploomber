@@ -24,7 +24,12 @@ RUN pip install -U pip pipenv && \
 # Install
 USER root
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends git git-flow && \
+    apt-get install -y --no-install-recommends \
+        git \
+        git-flow \
+        build-essential \
+        graphviz \
+        graphviz-dev && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
