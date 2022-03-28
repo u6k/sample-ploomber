@@ -16,3 +16,6 @@ fastparquet = "*"
 
 [requires]
 python_version = "3.8"
+
+[scripts]
+pipeline = "ploomber build"
