@@ -13,6 +13,6 @@ RUN apt-get update && \
 WORKDIR /var/myapp
 
 COPY . /var/myapp
-RUN pipenv sync --system
+RUN pipenv sync
 
 CMD ["pipenv", "scripts"]

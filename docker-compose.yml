@@ -1,11 +1,11 @@
 version: '3'
 
 services:
-  jupyter:
+  app:
     build: .
-    env_file:
-      - ./.env
+    environment:
+      - TZ=Asia/Tokyo
     ports:
       - 8888:8888
     volumes:
-      - .:/home/jovyan/work
+      - .:/var/myapp
