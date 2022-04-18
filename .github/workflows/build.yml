@@ -16,7 +16,7 @@ jobs:
           install: true
       - name: Lint
         run: docker-compose run app pipenv run lint
-      - name: Scrapy check
+      - name: Smoke test
         run: docker-compose run app pipenv run pipeline
 
       # Slack notification
