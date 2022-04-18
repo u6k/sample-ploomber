@@ -18,6 +18,8 @@ jobs:
         run: docker-compose run app pipenv run lint
       - name: Smoke test
         run: docker-compose run app pipenv run pipeline
+      - name: Unit test
+        run: docker-compose run app pipenv run test
 
       # Slack notification
       - name: Slack notification on success
