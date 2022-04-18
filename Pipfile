@@ -10,9 +10,17 @@ scikit-learn = "*"
 pandas = "*"
 matplotlib = "*"
 seaborn = "*"
-fastparquet = "*"
+pyarrow = "*"
 
 [dev-packages]
+flake8 = "*"
+autopep8 = "*"
+isort = "*"
 
 [requires]
 python_version = "3.8"
+
+[scripts]
+pipeline = "ploomber build"
+lint = "flake8 ."
+fix = "bash -c \"pipenv run isort . && pipenv run autopep8 -ivr .\""
