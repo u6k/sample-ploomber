@@ -9,18 +9,23 @@ tasks:
     source: src/features/build_features.py
     product:
       nb: notebooks/build_features.ipynb
-      df_wine_train: data/interim/df_wine_train.parquet
-      df_wine_test: data/interim/df_wine_test.parquet
+      df_wine: data/interim/df_wine.parquet
 
   - name: train_model
     source: src/models/train_model.py
     product:
       nb: notebooks/train_model.ipynb
       model: models/model.pkl
-      pred_train: data/processed/df_pred_train.parquet
-      pred_test: data/processed/df_pred_test.parquet
+      df_wine_train_data: data/processed/df_wine_train_data.parquet
+      df_wine_train_target: data/processed/df_wine_train_target.parquet
+      df_wine_test_data: data/processed/df_wine_test_data.parquet
+      df_wine_test_target: data/processed/df_wine_test_target.parquet
+      df_pred_train: data/processed/df_pred_train.parquet
+      df_pred_test: data/processed/df_pred_test.parquet
 
   - name: reporting
     source: src/visualization/reporting.py
     product:
       nb: notebooks/reporting.ipynb
+      classification_report: reports/classification_report.txt
+      confusion_matrix: reports/confusion_matrix.txt

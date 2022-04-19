@@ -16,6 +16,8 @@ pyarrow = "*"
 flake8 = "*"
 autopep8 = "*"
 isort = "*"
+pygraphviz = "*"
+pytest = "*"
 
 [requires]
 python_version = "3.8"
@@ -24,3 +26,4 @@ python_version = "3.8"
 pipeline = "ploomber build"
 lint = "flake8 ."
 fix = "bash -c \"pipenv run isort . && pipenv run autopep8 -ivr .\""
+test = "pytest"

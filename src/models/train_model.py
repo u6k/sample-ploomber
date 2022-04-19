@@ -2,61 +2,77 @@ import pickle
 
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import scale
 
 # %% tags=["parameters"]
-upstream = {
-    "build_features": {
-        "df_wine_train": "../../data/interim/df_wine_train.parquet",
-        "df_wine_test": "../../data/interim/df_wine_test.parquet",
-    }
-}
-product = {
-    "model": "../../models/model.pkl",
-    "pred_train": "../../data/processed/df_pred_train.parquet",
-    "pred_test": "../../data/processed/df_pred_test.parquet",
-}
+upstream = ["build_features"]
+product = None
 
 
 # %%
-df_wine_train = pd.read_parquet(upstream["build_features"]["df_wine_train"])
-df_wine_test = pd.read_parquet(upstream["build_features"]["df_wine_test"])
+df_wine = pd.read_parquet(upstream["build_features"]["df_wine"])
+df_wine
 
 
 # %%
-df_wine_train
+df_wine_data = df_wine.drop(["target"], axis=1)
+df_wine_target = df_wine[["target"]]
 
-
-# %%
-df_wine_test
-
-
-# %%
-model = RandomForestClassifier().fit(
-    df_wine_train.drop(["target"], axis=1),
-    df_wine_train["target"]
+df_wine_scaled = pd.DataFrame(
+    scale(df_wine_data),
+    columns=df_wine_data.columns,
 )
 
+
+# %%
+df_wine_scaled
+
+
+# %%
+df_wine_target
+
+
+# %%
+df_wine_train_data, df_wine_test_data, df_wine_train_target, df_wine_test_target = train_test_split(
+    df_wine_scaled, df_wine_target,
+    test_size=0.5,
+    random_state=0
+)
+
+
+# %%
+df_wine_train_data
+
+
+# %%
+df_wine_train_target.value_counts()
+
+
+# %%
+df_wine_test_data
+
+
+# %%
+df_wine_test_target.value_counts()
+
+
+# %%
+model = RandomForestClassifier().fit(df_wine_train_data, df_wine_train_target)
 model
 
 
 # %%
-pred_wine_train = model.predict(df_wine_train.drop(["target"], axis=1))
-pred_wine_test = model.predict(df_wine_test.drop(["target"], axis=1))
+df_pred_train = df_wine_train_target.copy()
+df_pred_train["pred"] = model.predict(df_wine_train_data)
 
-
-# %%
-df_pred_train = df_wine_train[["target"]]
-df_pred_train["pred"] = pred_wine_train
-
-df_pred_test = df_wine_test[["target"]]
-df_pred_test["pred"] = pred_wine_test
-
-
-# %%
 df_pred_train
 
 
 # %%
+df_pred_test = df_wine_test_target.copy()
+df_pred_test["pred"] = model.predict(df_wine_test_data)
+
 df_pred_test
 
 
@@ -65,5 +81,9 @@ pickle.dump(model, open(product["model"], "wb"))
 
 
 # %%
-df_pred_train.to_parquet(product["pred_train"])
-df_pred_test.to_parquet(product["pred_test"])
+df_wine_train_data.to_parquet(product["df_wine_train_data"])
+df_wine_train_target.to_parquet(product["df_wine_train_target"])
+df_wine_test_data.to_parquet(product["df_wine_test_data"])
+df_wine_test_target.to_parquet(product["df_wine_test_target"])
+df_pred_train.to_parquet(product["df_pred_train"])
+df_pred_test.to_parquet(product["df_pred_test"])
