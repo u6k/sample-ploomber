@@ -131,8 +131,5 @@ dmypy.json
 
 
 # Add my project
-/data/
-/notebooks/
-/models/
-/reports/
+/output/
 *.metadata
