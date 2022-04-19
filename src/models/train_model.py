@@ -7,6 +7,7 @@ from sklearn.preprocessing import scale
 
 # %% tags=["parameters"]
 upstream = ["build_features"]
+product = None
 
 
 # %%

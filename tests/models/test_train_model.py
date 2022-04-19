@@ -1,6 +1,7 @@
 import pickle
 
 import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
 
 
 def test_product():
@@ -45,3 +46,5 @@ def test_product():
         assert t in [0, 1, 2]
     for p in df_pred_test["pred"]:
         assert p in [0, 1, 2]
+
+    assert type(model) is RandomForestClassifier

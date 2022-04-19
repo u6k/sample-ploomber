@@ -3,6 +3,7 @@ from sklearn.metrics import classification_report, confusion_matrix
 
 # %% tags=["parameters"]
 upstream = ["train_model"]
+product = None
 
 
 # %%
@@ -26,8 +27,8 @@ con_matrix = confusion_matrix(
 
 df_con_matrix = pd.DataFrame(
     con_matrix,
-    columns=[f"pred_{l}" for l in matrix_labels],
-    index=[f"act_{l}" for l in matrix_labels]
+    columns=[f"pred_{label}" for label in matrix_labels],
+    index=[f"act_{label}" for label in matrix_labels]
 )
 
 df_con_matrix

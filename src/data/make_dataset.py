@@ -3,6 +3,7 @@ from sklearn.datasets import load_wine
 
 # %% tags=["parameters"]
 upstream = None
+product = None
 
 
 # %%
