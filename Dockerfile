@@ -20,4 +20,6 @@ VOLUME /var/myapp
 COPY Pipfile Pipfile.lock ./
 RUN pipenv sync --dev
 
+VOLUME /var/output
+
 CMD ["pipenv", "scripts"]

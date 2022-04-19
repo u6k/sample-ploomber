@@ -9,3 +9,4 @@ services:
       - 8888:8888
     volumes:
       - .:/var/myapp
+      - ./output:/var/output
