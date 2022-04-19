@@ -4,8 +4,6 @@ tasks:
     product:
       nb: '{{dir_output}}/notebooks/make_dataset.ipynb'
       df_wine: '{{dir_output}}/data/raw/df_wine.parquet'
-    params:
-      predict_target_index: '{{predict_target_index}}'
 
   - name: build_features
     source: ./src/features/build_features.py
