@@ -16,8 +16,10 @@ jobs:
           install: true
       - name: Lint
         run: docker-compose run app pipenv run lint
-      - name: Smoke test
+      - name: Smoke test (1)
         run: docker-compose run app pipenv run pipeline
+      - name: Smoke test (2)
+        run: docker-compose run app pipenv run pipeline --entry-point pipeline-predict.yaml
       - name: Unit test
         run: docker-compose run app pipenv run test
 
