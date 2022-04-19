@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-def test_product():
+def test_df_wine():
     df_wine = pd.read_parquet("/var/output/data/raw/df_wine.parquet")
 
     assert len(df_wine) > 0
