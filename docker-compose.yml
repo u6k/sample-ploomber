@@ -5,8 +5,33 @@ services:
     build: .
     environment:
       - TZ=Asia/Tokyo
-    ports:
-      - 8888:8888
+      - MLFLOW_TRACKING_URI=http://mlflow:5000/
+      - MLFLOW_S3_ENDPOINT_URL=http://s3:9000/
+      - AWS_ACCESS_KEY_ID=s3_access_key
+      - AWS_SECRET_ACCESS_KEY=s3_secret_key
     volumes:
       - .:/var/myapp
       - ./output:/var/output
+    depends_on:
+      - mlflow
+      - s3
+
+  mlflow:
+    build:
+      context: .
+      dockerfile: Dockerfile.mlflow
+    ports:
+      - 5000:5000
+    environment:
+      - TZ=Asia/Tokyo
+      - MLFLOW_S3_ENDPOINT_URL=http://s3:9000/
+      - AWS_ACCESS_KEY_ID=s3_access_key
+      - AWS_SECRET_ACCESS_KEY=s3_secret_key
+
+  s3:
+    image: minio/minio
+    environment:
+      - MINIO_ACCESS_KEY=s3_access_key
+      - MINIO_SECRET_KEY=s3_secret_key
+      - MINIO_REGION=us-east-1
+    command: server /data
