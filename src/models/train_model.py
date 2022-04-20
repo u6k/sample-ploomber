@@ -1,5 +1,6 @@
 import pickle
 
+import mlflow
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
@@ -103,3 +104,11 @@ df_wine_test_data.to_parquet(product["df_wine_test_data"])
 df_wine_test_target.to_parquet(product["df_wine_test_target"])
 df_pred_train.to_parquet(product["df_pred_train"])
 df_pred_test.to_parquet(product["df_pred_test"])
+
+
+# %%
+mlflow.set_experiment("sample-ploomber")
+with mlflow.start_run(run_name="train-model"):
+    mlflow.log_param("test_size", test_size)
+
+    mlflow.sklearn.log_model(model, "model")

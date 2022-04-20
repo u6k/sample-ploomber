@@ -11,6 +11,8 @@ pandas = "*"
 matplotlib = "*"
 seaborn = "*"
 pyarrow = "*"
+boto3 = "*"
+mlflow = "*"
 
 [dev-packages]
 flake8 = "*"

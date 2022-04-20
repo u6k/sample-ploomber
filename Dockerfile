@@ -7,7 +7,8 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         build-essential \
         graphviz \
-        graphviz-dev && \
+        graphviz-dev \
+        git && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     pip install -U pip && \
