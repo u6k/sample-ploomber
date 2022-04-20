@@ -19,7 +19,7 @@ jobs:
       - name: Start MLFlow, Minio
         run: docker-compose up -d
       - name: Create bucket
-        run: docker-compose exec s3 mkdir /data/mlflow
+        run: docker-compose exec -T s3 mkdir /data/mlflow
       - name: Smoke test (1)
         run: docker-compose run app pipenv run pipeline
       - name: Smoke test (2)
