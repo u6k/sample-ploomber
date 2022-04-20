@@ -1,0 +1,34 @@
+tasks:
+  - name: make_dataset
+    source: ./src/data/make_dataset.py
+    product:
+      nb: '{{dir_output}}/notebooks/make_dataset.ipynb'
+      df_wine: '{{dir_output}}/data/raw/df_wine.parquet'
+
+  - name: build_features
+    source: ./src/features/build_features.py
+    product:
+      nb: '{{dir_output}}/notebooks/build_features.ipynb'
+      df_wine: '{{dir_output}}/data/interim/df_wine.parquet'
+
+  - name: train_model
+    source: ./src/models/train_model.py
+    product:
+      nb: '{{dir_output}}/notebooks/train_model.ipynb'
+      model: '{{dir_output}}/models/model.pkl'
+      scaler: '{{dir_output}}/models/scaler.pkl'
+      df_wine_train_data: '{{dir_output}}/data/processed/df_wine_train_data.parquet'
+      df_wine_train_target: '{{dir_output}}/data/processed/df_wine_train_target.parquet'
+      df_wine_test_data: '{{dir_output}}/data/processed/df_wine_test_data.parquet'
+      df_wine_test_target: '{{dir_output}}/data/processed/df_wine_test_target.parquet'
+      df_pred_train: '{{dir_output}}/data/processed/df_pred_train.parquet'
+      df_pred_test: '{{dir_output}}/data/processed/df_pred_test.parquet'
+    params:
+      test_size: '{{test_size}}'
+
+  - name: reporting
+    source: ./src/visualization/reporting.py
+    product:
+      nb: '{{dir_output}}/notebooks/reporting.ipynb'
+      classification_report: '{{dir_output}}/reports/classification_report.txt'
+      confusion_matrix: '{{dir_output}}/reports/confusion_matrix.txt'

@@ -1,0 +1,8 @@
+FROM python:3.8-slim
+LABEL maintainer="u6k.apps@gmail.com"
+
+RUN pip install -U mlflow boto3
+
+EXPOSE 5000
+
+CMD ["mlflow", "server", "--host", "0.0.0.0", "--port", "5000", "--default-artifact-root", "s3://mlflow/artifacts"]

@@ -1,0 +1,22 @@
+tasks:
+  - name: make_dataset
+    source: ./src/data/make_dataset.py
+    product:
+      nb: '{{dir_output}}/notebooks/make_dataset.ipynb'
+      df_wine: '{{dir_output}}/data/raw/df_wine.parquet'
+
+  - name: build_features
+    source: ./src/features/build_features.py
+    product:
+      nb: '{{dir_output}}/notebooks/build_features.ipynb'
+      df_wine: '{{dir_output}}/data/interim/df_wine.parquet'
+
+  - name: predict
+    source: ./src/models/predict.py
+    product:
+      nb: '{{dir_output}}/notebooks/predict.ipynb'
+      df_pred: '{{dir_output}}/data/processed/df_pred.parquet'
+    params:
+      model_path: '{{dir_output}}/models/model.pkl'
+      scaler_path: '{{dir_output}}/models/scaler.pkl'
+      predict_target_index: '{{predict_target_index}}'

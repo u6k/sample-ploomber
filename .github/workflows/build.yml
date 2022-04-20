@@ -1,0 +1,46 @@
+on:
+  push:
+
+env:
+  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup buildx
+        uses: docker/setup-buildx-action@v1
+        with:
+          install: true
+      - name: Lint
+        run: docker-compose run app pipenv run lint
+      - name: Start MLFlow, Minio
+        run: docker-compose up -d
+      - name: Create bucket
+        run: docker-compose exec -T s3 mkdir /data/mlflow
+      - name: Smoke test (1)
+        run: docker-compose run app pipenv run pipeline
+      - name: Smoke test (2)
+        run: docker-compose run app pipenv run pipeline --entry-point pipeline-predict.yaml
+      - name: Unit test
+        run: docker-compose run app pipenv run test
+
+      # Slack notification
+      - name: Slack notification on success
+        if: success()
+        uses: rtCamp/action-slack-notify@v2.0.2
+        env:
+          SLACK_CHANNEL: build
+          SLACK_ICON_EMOJI: ':cat:'
+          SLACK_MESSAGE: ${{ github.repository }} Build success
+          SLACK_COLOR: good
+      - name: Slack notification on failure
+        if: failure()
+        uses: rtCamp/action-slack-notify@v2.0.2
+        env:
+          SLACK_CHANNEL: build
+          SLACK_ICON_EMOJI: ':scream_cat:'
+          SLACK_MESSAGE: ${{ github.repository }} Build failure
+          SLACK_COLOR: danger
